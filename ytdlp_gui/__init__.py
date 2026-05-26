@@ -1,0 +1,11 @@
+"""YT-DLP GUI Frontend package"""
+
+import shutil
+
+try:
+    from tkinterdnd2 import DND_TEXT, TkinterDnD
+    HAS_DND = True
+except ImportError:
+    HAS_DND = False
+
+HAS_MPV = shutil.which("mpv") is not None
