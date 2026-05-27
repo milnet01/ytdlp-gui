@@ -4,6 +4,10 @@ A tkinter-based graphical frontend for [yt-dlp](https://github.com/yt-dlp/yt-dlp
 
 Four tabs in one window: download videos, search YouTube with embedded playback, inspect local media files, and browse download history. Three themes (Dark, Nord, Monokai, YouTube), drag-and-drop URL support, optional embedded mpv player, browser cookie import, and yt-dlp self-update from the GUI.
 
+## Download for Windows
+
+A single-file `ytdlp-gui.exe` is published on the [Releases page](https://github.com/milnet01/ytdlp-gui/releases) — no Python install needed. Double-click to run; user data is created next to the .exe. See [docs/windows-build.md](docs/windows-build.md) for build internals.
+
 ## Features
 
 - **Download tab** — paste a URL (or drag-and-drop), pick format/resolution, queue multiple downloads, watch live progress
