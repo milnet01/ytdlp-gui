@@ -8,6 +8,7 @@ import tempfile
 
 from .theme import get_theme
 from .utils import format_duration
+from .platform_utils import open_path
 
 
 class PlayerMixin:
@@ -33,7 +34,7 @@ class PlayerMixin:
             return
         if not HAS_MPV:
             try:
-                subprocess.Popen(["xdg-open", "--", url])
+                open_path(url)
                 return
             except Exception:
                 messagebox.showerror("Error",

@@ -88,6 +88,8 @@ def open_path(target):
     Safe against argument injection — uses os.startfile on Windows (no shell)
     and the dedicated openers on macOS/Linux with `--` separator.
     """
+    if not target:
+        return
     if is_windows():
         # os.startfile is the Windows-native way; honours file associations.
         os.startfile(target)  # noqa: S606 — intentional, Windows-only API
