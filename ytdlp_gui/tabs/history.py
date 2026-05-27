@@ -2,7 +2,6 @@
 
 import os
 import json
-import subprocess
 import tkinter as tk
 from tkinter import ttk, messagebox
 from datetime import datetime
