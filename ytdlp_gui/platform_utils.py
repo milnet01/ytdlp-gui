@@ -81,6 +81,17 @@ def find_ffmpeg():
     return shutil.which("ffmpeg")
 
 
+def find_ffprobe():
+    """Resolve ffprobe. Bundled copy wins; otherwise falls back to PATH; otherwise 'ffprobe'."""
+    bundled = _find_bundled_binary("ffprobe")
+    if bundled:
+        return bundled
+    on_path = shutil.which("ffprobe")
+    if on_path:
+        return on_path
+    return "ffprobe"
+
+
 def open_path(target):
     """Open a file, folder, or URL in the OS default handler.
 

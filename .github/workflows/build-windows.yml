@@ -2,7 +2,7 @@ name: build-windows
 
 on:
   push:
-    branches: [main]
+    branches: [main, windows-build]
     tags: ["v*"]
   workflow_dispatch:
 
@@ -44,7 +44,9 @@ jobs:
             -OutFile "ffmpeg.zip"
           Expand-Archive -Path ffmpeg.zip -DestinationPath ffmpeg-extract -Force
           $ffmpegExe = Get-ChildItem -Path ffmpeg-extract -Recurse -Filter ffmpeg.exe | Select-Object -First 1
+          $ffprobeExe = Get-ChildItem -Path ffmpeg-extract -Recurse -Filter ffprobe.exe | Select-Object -First 1
           Copy-Item -Path $ffmpegExe.FullName -Destination "bin/ffmpeg.exe"
+          Copy-Item -Path $ffprobeExe.FullName -Destination "bin/ffprobe.exe"
           Remove-Item -Recurse -Force ffmpeg-extract, ffmpeg.zip
 
       - name: Run platform_utils smoke-test
