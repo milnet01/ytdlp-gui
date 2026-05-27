@@ -6,6 +6,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 from . import HAS_DND
+from .platform_utils import app_data_dir
 from .theme import THEMES, get_theme, set_theme, setup_styles
 from .player import PlayerMixin
 from .version import VersionMixin
@@ -40,7 +41,7 @@ class YTDLPGui(DownloadTabMixin, SearchTabMixin, MediaInfoTabMixin,
         self._base_title = "YT-DLP Video Downloader"
 
         # Paths - use the project root (parent of ytdlp_gui package)
-        self.script_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.script_dir = app_data_dir()
         self.config_file = os.path.join(self.script_dir, "config.json")
         saved_config = self._load_config()
         self.save_path_var = tk.StringVar(
