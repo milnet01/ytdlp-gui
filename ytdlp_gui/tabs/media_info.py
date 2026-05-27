@@ -8,6 +8,7 @@ from tkinter import ttk, filedialog, messagebox
 
 from ..theme import get_theme
 from ..utils import zenity_file_dialog
+from ..platform_utils import find_ytdlp
 
 
 class MediaInfoTabMixin:

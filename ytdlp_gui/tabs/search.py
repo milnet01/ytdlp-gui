@@ -9,6 +9,7 @@ from urllib.parse import quote
 
 from ..theme import get_theme
 from ..utils import format_duration, format_view_count, clear_treeview
+from ..platform_utils import find_ytdlp
 from .. import HAS_MPV
 
 

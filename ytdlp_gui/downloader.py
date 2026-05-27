@@ -14,6 +14,7 @@ from io import BytesIO
 
 from .utils import format_duration, format_filesize, clear_treeview
 from .cookies import extract_browser_cookies, get_cookie_args
+from .platform_utils import find_ytdlp, find_ffmpeg
 
 try:
     from PIL import Image, ImageTk
@@ -58,8 +59,11 @@ class DownloaderMixin:
         return url.startswith("http://") or url.startswith("https://")
 
     def _get_base_cmd(self):
-        """Build the base yt-dlp command with JS runtime detection"""
-        cmd = ["yt-dlp", "--ignore-config", "--remote-components", "ejs:github"]
+        """Build the base yt-dlp command with JS runtime + ffmpeg detection."""
+        cmd = [find_ytdlp(), "--ignore-config", "--remote-components", "ejs:github"]
+        ffmpeg = find_ffmpeg()
+        if ffmpeg:
+            cmd.extend(["--ffmpeg-location", ffmpeg])
         self._ensure_runtime_cache()
         if self._cached_runtimes:
             cmd.extend(["--js-runtimes", ",".join(self._cached_runtimes)])

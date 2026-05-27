@@ -9,6 +9,8 @@ import tkinter as tk
 from tkinter import messagebox
 import urllib.request
 
+from .platform_utils import find_ytdlp
+
 
 class VersionMixin:
     """Mixin providing yt-dlp version check and update functionality.
@@ -25,7 +27,7 @@ class VersionMixin:
     def _check_version_thread(self):
         # Get current installed version
         try:
-            result = subprocess.run(["yt-dlp", "--version"], capture_output=True, text=True, timeout=10)
+            result = subprocess.run([find_ytdlp(), "--version"], capture_output=True, text=True, timeout=10)
             if result.returncode == 0:
                 self.current_version = result.stdout.strip()
                 self.root.after(0, lambda: self.version_var.set(f"v{self.current_version}"))
@@ -140,7 +142,7 @@ class VersionMixin:
                 # Verify the new version
                 new_version = None
                 try:
-                    ver_result = subprocess.run(["yt-dlp", "--version"], capture_output=True, text=True, timeout=10)
+                    ver_result = subprocess.run([find_ytdlp(), "--version"], capture_output=True, text=True, timeout=10)
                     if ver_result.returncode == 0:
                         new_version = ver_result.stdout.strip()
                 except Exception:
