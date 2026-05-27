@@ -34,7 +34,8 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force -Path bin | Out-Null
           # yt-dlp.exe — pinned release matching requirements.txt yt-dlp version.
-          $ytdlpVersion = "2026.3.17"
+          # GitHub tags zero-pad the month (2026.03.17); PyPI strips the zero (2026.3.17).
+          $ytdlpVersion = "2026.03.17"
           Invoke-WebRequest -UseBasicParsing `
             -Uri "https://github.com/yt-dlp/yt-dlp/releases/download/$ytdlpVersion/yt-dlp.exe" `
             -OutFile "bin/yt-dlp.exe"
