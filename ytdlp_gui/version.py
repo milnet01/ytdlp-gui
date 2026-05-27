@@ -9,7 +9,7 @@ import tkinter as tk
 from tkinter import messagebox
 import urllib.request
 
-from .platform_utils import find_ytdlp
+from .platform_utils import find_ytdlp, is_windows
 
 
 class VersionMixin:
@@ -79,7 +79,21 @@ class VersionMixin:
             return (v1 > v2) - (v1 < v2)
 
     def _show_update_available(self):
-        """Show update available button and prompt user"""
+        """Show update available button and prompt user (Linux only)."""
+        if is_windows():
+            # Bundled yt-dlp.exe is shipped with each GUI release — the user
+            # updates by downloading a new ytdlp-gui.exe. Show a passive label
+            # only; don't prompt or wire the update button to run pkexec/curl.
+            self.update_btn.config(
+                text=f"v{self.latest_version} available — download new GUI",
+                state=tk.DISABLED,
+            )
+            self.status_var.set(
+                f"yt-dlp {self.latest_version} is out — grab the latest "
+                f"ytdlp-gui.exe from GitHub Releases to update."
+            )
+            return
+
         self.update_btn.config(text=f"Update to {self.latest_version}", state=tk.NORMAL)
         self.status_var.set(f"Update available: {self.current_version} -> {self.latest_version}")
 
@@ -91,7 +105,15 @@ class VersionMixin:
             self._do_update()
 
     def update_ytdlp(self):
-        """Update yt-dlp to latest version (called from button)"""
+        """Update yt-dlp to latest version (called from button)."""
+        if is_windows():
+            messagebox.showinfo(
+                "Update via GUI download",
+                "On Windows, yt-dlp is bundled inside this app.\n\n"
+                "To update, download the latest ytdlp-gui.exe from\n"
+                "https://github.com/milnet01/ytdlp-gui/releases"
+            )
+            return
         if self.latest_version:
             if messagebox.askyesno("Update yt-dlp",
                                    f"Update yt-dlp to version {self.latest_version}?\n\n"
